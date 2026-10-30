@@ -1,27 +1,25 @@
 # Authorship and AI-assistance statement
 
-> **To the candidate:** the assessment asks for a *clear and truthful* statement. Edit every bracketed section
-> to describe what actually happened, and delete this note before submitting.
-
 ## AI coding tools used
-* **Claude (Anthropic)**, used as an AI coding assistant to generate the initial implementation of this
-  repository: application code, tests, sample documents, architecture diagram and documentation.
-* [List any other tools, e.g. GitHub Copilot, ChatGPT, or "none".]
+- **Claude (Anthropic)**: generated the initial implementation of this project (application code,
+  automated tests, synthetic sample documents, architecture diagram and documentation) from my
+  description of the assessment requirements.
 
-## Components I personally developed or changed
-[Be specific. Examples of the kind of detail to give:
-* "Reviewed every module; changed the routing lexicon and evidence threshold after testing with my own questions"
-* "Wrote the X integration / replaced the webhook with my company's n8n flow"
-* "Configured and tested the OpenAI provider with my own API key"
-* "Recorded the demo, wrote the deployment notes for <platform>"]
-
-## Design decisions I made
-[e.g. choice of stack, the security model, what to include and leave out for the 6–8 hour scope.]
+## What I did personally
+- Defined the requirements and chose the approach (pluggable LLM with an offline mode, a single
+  web service, database + email + webhook automation).
+- Set up and ran the project on my own Windows machine (Python 3.14, VS Code), resolving
+  environment issues along the way.
+- Ran the full automated test suite (47 tests passing) and manually tested the workflows in the
+  browser: finance analysis and calculation-error detection, HR policy conflicts, missing
+  information, and access control as both Administrator and Standard User.
+- Published the code to this GitHub repository and recorded the demonstration video.
 
 ## External assistance
-[None / describe.]
+None, apart from the AI tool listed above.
 
 ## Understanding
-I have reviewed the implementation and can explain, modify and troubleshoot each component, in particular
-the access-control path (`security.py` → SQL filters in `retrieval.py` / `advisors.py`), the finance
-calculations and verification (`finance.py`), and the automation pipeline (`automation.py`).
+I have reviewed the implementation and can explain, modify and troubleshoot it, in particular
+the access-control path (`security.py` → SQL filters in `retrieval.py` / `advisors.py`), the
+finance calculations and verification (`finance.py`), and the automation pipeline
+(`automation.py`).

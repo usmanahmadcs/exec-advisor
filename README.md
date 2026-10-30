@@ -18,18 +18,35 @@ send an email notification, then call a webhook.
 
 ---
 
-## Quick start (about 2 minutes, no API key needed)
+## Quick start (about 5 minutes, no API key needed)
 
-Requires **Python 3.10+**.
+Requires **Python 3.10+** and **Git**. Tested on Windows (Python 3.14) and Linux (Python 3.13).
 
-```bash
-git clone <your-repo-url> exec-advisor && cd exec-advisor
-python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
+**Windows (PowerShell / VS Code terminal)**
+```powershell
+git clone https://github.com/usmanahmadcs/exec-advisor.git
+cd exec-advisor
+py -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements-dev.txt
-cp .env.example .env                                   # optional: edit settings
-python scripts/seed_demo.py --reset                    # creates users + loads 8 sample documents
-python -m advisor.app                                  # http://127.0.0.1:8000
+copy .env.example .env
+py scripts/seed_demo.py --reset        # creates users + loads 8 sample documents
+py -m advisor.app                      # then open http://127.0.0.1:8000
 ```
+
+**macOS / Linux**
+```bash
+git clone https://github.com/usmanahmadcs/exec-advisor.git
+cd exec-advisor
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-dev.txt
+cp .env.example .env
+python scripts/seed_demo.py --reset
+python -m advisor.app                  # then open http://127.0.0.1:8000
+```
+
+> Windows tips: if `python` says *"Python was not found"*, use `py` as shown above. If activation says
+> *"running scripts is disabled"*, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once.
 
 Sign in with a demo account (change these in `.env` before any real use):
 
@@ -67,10 +84,11 @@ docker compose exec advisor python scripts/seed_demo.py
 ### Tests
 
 ```bash
-python -m unittest discover -s tests -t . -v      # or: pytest -q
+python -m unittest discover -s tests -t . -v      # Windows: py -m unittest discover -s tests -t . -v
 ```
 
-47 tests run offline in about 8 seconds. `tests/test_reliability.py` maps directly to Task 3 and Task 6 (see below).
+47 tests run offline in under 30 seconds (messages such as `webhook attempt 1/3 failed` are expected:
+those tests deliberately simulate outages). `tests/test_reliability.py` maps directly to Task 3 and Task 6 (see below).
 
 ---
 
@@ -208,4 +226,4 @@ Nothing in the corpus covers parental leave, so it serves as the missing-informa
 * SQLite and an in-process background pool suit a single node. Scaling out means PostgreSQL plus a job queue.
 
 ## Authorship and AI-assistance statement
-See **[AI_ASSISTANCE.md](AI_ASSISTANCE.md)**. Complete it truthfully before you submit.
+See **[AI_ASSISTANCE.md](AI_ASSISTANCE.md)** for which tools were used and which parts I developed personally.
