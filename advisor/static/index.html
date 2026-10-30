@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Executive Advisory System</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <!-- ============================ login ============================ -->
+  <section id="login-view" class="login-wrap" hidden>
+    <form id="login-form" class="login-card" autocomplete="on">
+      <div class="brand"><span class="logo">EA</span><div><h1>Executive Advisory</h1><p>AI knowledge &amp; specialist advisors</p></div></div>
+      <label>Username<input id="login-user" name="username" required autocomplete="username"></label>
+      <label>Password<input id="login-pass" name="password" type="password" required autocomplete="current-password"></label>
+      <button class="btn primary" type="submit">Sign in</button>
+      <p id="login-error" class="error" role="alert"></p>
+      <div class="demo-accounts">
+        <span>Demo accounts</span>
+        <button type="button" class="btn ghost" data-demo="admin">Administrator</button>
+        <button type="button" class="btn ghost" data-demo="analyst">Standard user</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ============================ app ============================ -->
+  <div id="app-view" hidden>
+    <header class="topbar">
+      <div class="brand small"><span class="logo">EA</span><strong>Executive Advisory</strong></div>
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="ask">Ask</button>
+        <button class="tab" data-tab="documents">Documents</button>
+        <button class="tab" data-tab="automation">Automation</button>
+        <button class="tab admin-only" data-tab="admin">Admin &amp; Security</button>
+      </nav>
+      <div class="who">
+        <span id="llm-chip" class="chip" title="Language model provider"></span>
+        <span id="user-chip" class="chip"></span>
+        <button id="logout" class="btn ghost">Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ---------------- Ask ---------------- -->
+      <section id="tab-ask" class="panel">
+        <form id="ask-form" class="ask-box">
+          <textarea id="question" rows="2" maxlength="2000" placeholder="Ask about your business documents, e.g. 'How did revenue grow from Q1 to Q2?'" required></textarea>
+          <div class="ask-row">
+            <select id="advisor-select" aria-label="Advisor">
+              <option value="auto">Auto-route</option>
+              <option value="general">Knowledge Assistant</option>
+              <option value="finance">Finance Advisor</option>
+              <option value="hr">HR / Management Advisor</option>
+            </select>
+            <button class="btn primary" type="submit" id="ask-btn">Ask</button>
+          </div>
+          <div class="examples" id="examples"></div>
+        </form>
+        <div id="answers"></div>
+      </section>
+
+      <!-- ---------------- Documents ---------------- -->
+      <section id="tab-documents" class="panel" hidden>
+        <form id="upload-form" class="card upload">
+          <h2>Upload a document</h2>
+          <div class="upload-row">
+            <input type="file" id="file" accept=".pdf,.docx,.txt,.md" required>
+            <label>Category
+              <select id="category"><option value="auto">Auto-detect</option><option value="finance">Finance</option><option value="hr">HR / Management</option><option value="general">General</option></select>
+            </label>
+            <label>Access
+              <select id="classification"><option value="public">Public (all users)</option><option value="confidential">Confidential (admins)</option></select>
+            </label>
+            <button class="btn primary" type="submit">Upload &amp; process</button>
+          </div>
+          <p class="hint">PDF, Word (.docx), text or markdown, max 15 MB. Each upload is parsed, indexed and summarised, the result is stored in the database, and a notification is sent.</p>
+          <p id="upload-msg" role="status"></p>
+        </form>
+        <div class="card"><h2>Documents you can access</h2><div id="doc-table"></div></div>
+      </section>
+
+      <!-- ---------------- Automation ---------------- -->
+      <section id="tab-automation" class="panel" hidden>
+        <div class="card">
+          <h2>Automation pipeline runs</h2>
+          <p class="hint">upload &rarr; parse &amp; index &rarr; AI summary &rarr; record in database &rarr; email notification &rarr; webhook</p>
+          <div id="runs-table"></div>
+        </div>
+      </section>
+
+      <!-- ---------------- Admin ---------------- -->
+      <section id="tab-admin" class="panel" hidden>
+        <div class="grid-4" id="metric-cards"></div>
+        <div class="card">
+          <h2>Reliability testing</h2>
+          <label class="switch"><input type="checkbox" id="outage-toggle"> Simulate an AI provider outage (answers fall back to extractive mode)</label>
+        </div>
+        <div class="card"><h2>Security audit log</h2>
+          <label class="inline"><input type="checkbox" id="denied-only"> Denied events only</label>
+          <div id="audit-table"></div></div>
+        <div class="card"><h2>Question log</h2><div id="query-table"></div></div>
+        <div class="card"><h2>Notification outbox</h2><div id="outbox"></div></div>
+      </section>
+    </main>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

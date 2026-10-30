@@ -1,0 +1,4 @@
+-r requirements.txt
+reportlab>=4.0     # generates the sample PDF documents
+httpx>=0.27        # required by starlette.testclient
+pytest>=8          # optional; the suite also runs with `python -m unittest`

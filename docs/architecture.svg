@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 640" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .box{fill:#ffffff;stroke:#9aa5b5;stroke-width:1.2}
+      .core{fill:#e7eef6;stroke:#1f4e79;stroke-width:1.4}
+      .sec{fill:#f3e8fa;stroke:#6b2c91;stroke-width:1.4}
+      .ext{fill:#fff4dc;stroke:#a87400;stroke-width:1.2}
+      .data{fill:#e4f4ea;stroke:#1e7b4a;stroke-width:1.2}
+      .t{font-weight:600;fill:#1c2230}
+      .s{fill:#4a5568;font-size:11.5px}
+      .l{stroke:#4a5568;stroke-width:1.3;fill:none;marker-end:url(#a)}
+      .ld{stroke:#4a5568;stroke-width:1.3;fill:none;stroke-dasharray:5 4;marker-end:url(#a)}
+      .lab{fill:#4a5568;font-size:11px}
+      .grp{fill:none;stroke:#c3cad5;stroke-dasharray:4 4}
+      .gt{fill:#6b7585;font-size:11px;letter-spacing:.6px}
+    </style>
+  </defs>
+  <rect width="1110" height="640" fill="#f8f9fb"/>
+  <text x="24" y="32" font-size="18" font-weight="700" fill="#1c2230">Mini AI Executive Advisory System - architecture</text>
+
+  <!-- Top row -->
+  <rect class="box" x="24" y="60" width="236" height="74" rx="8"/>
+  <text class="t" x="40" y="84">Web dashboard</text>
+  <text class="s" x="40" y="103">HTML/JS, no inline script (CSP)</text>
+  <text class="s" x="40" y="120">Ask · Documents · Automation · Admin</text>
+
+  <rect class="sec" x="300" y="60" width="330" height="74" rx="8"/>
+  <text class="t" x="316" y="84">Starlette API (ASGI)</text>
+  <text class="s" x="316" y="103">JWT auth · role re-read from DB · lockout</text>
+  <text class="s" x="316" y="120">security headers · request IDs · upload limits</text>
+  <path class="l" d="M260,97 H298"/>
+  <text class="lab" x="264" y="90">HTTPS</text>
+
+  <rect class="sec" x="680" y="60" width="406" height="74" rx="8"/>
+  <text class="t" x="696" y="84">Access policy (security.py)</text>
+  <text class="s" x="696" y="103">admin → public + confidential · user → public only</text>
+  <text class="s" x="696" y="120">applied inside every SQL query, before any text reaches the LLM</text>
+  <path class="ld" d="M630,97 H678"/>
+
+  <!-- Question path -->
+  <rect class="grp" x="16" y="160" width="636" height="310" rx="10"/>
+  <text class="gt" x="28" y="178">QUESTION PATH (POST /api/ask)</text>
+  <path class="l" d="M420,134 V184 H136 V190"/>
+
+  <rect class="core" x="36" y="192" width="200" height="62" rx="8"/>
+  <text class="t" x="50" y="216">Router</text>
+  <text class="s" x="50" y="234">weighted keywords + policy topics</text>
+  <text class="s" x="50" y="248">(optional LLM tie-break)</text>
+
+  <rect class="core" x="262" y="192" width="118" height="62" rx="8"/>
+  <text class="t" x="274" y="216">Knowledge</text>
+  <text class="s" x="274" y="234">Assistant</text>
+  <rect class="core" x="390" y="192" width="118" height="62" rx="8"/>
+  <text class="t" x="402" y="216">Finance</text>
+  <text class="s" x="402" y="234">Advisor</text>
+  <rect class="core" x="518" y="192" width="118" height="62" rx="8"/>
+  <text class="t" x="530" y="216">HR / Mgmt</text>
+  <text class="s" x="530" y="234">Advisor</text>
+  <path class="l" d="M236,223 H260"/>
+
+  <rect class="box" x="36" y="282" width="216" height="74" rx="8"/>
+  <text class="t" x="50" y="306">Permission-aware BM25</text>
+  <text class="s" x="50" y="324">index built only from allowed docs</text>
+  <text class="s" x="50" y="341">evidence-coverage threshold</text>
+
+  <rect class="box" x="264" y="282" width="180" height="74" rx="8"/>
+  <text class="t" x="278" y="306">Finance engine</text>
+  <text class="s" x="278" y="324">Decimal ratios &amp; growth</text>
+  <text class="s" x="278" y="341">reported-vs-computed checks</text>
+
+  <rect class="box" x="456" y="282" width="180" height="74" rx="8"/>
+  <text class="t" x="470" y="306">Policy checks</text>
+  <text class="s" x="470" y="324">conflicts by effective date</text>
+  <text class="s" x="470" y="341">missing-topic detection</text>
+  <path class="l" d="M321,254 L150,280"/><path class="l" d="M449,254 L360,280"/><path class="l" d="M577,254 L550,280"/>
+
+  <rect class="box" x="36" y="376" width="600" height="80" rx="8"/>
+  <text class="t" x="50" y="399">Grounding &amp; guards (grounding.py)</text>
+  <text class="s" x="50" y="417">numbered sources [S1..] → strict prompt → citation validation</text>
+  <text class="s" x="50" y="433">invented citations stripped · uncited answers replaced by extractive evidence</text>
+  <text class="s" x="50" y="449">LLM numbers must match computed values · explicit "insufficient evidence"</text>
+  <path class="l" d="M144,356 V374"/><path class="l" d="M354,356 V374"/><path class="l" d="M546,356 V374"/>
+
+  <!-- Upload automation -->
+  <rect class="grp" x="700" y="160" width="390" height="200" rx="10"/>
+  <text class="gt" x="712" y="178">UPLOAD AUTOMATION (POST /api/documents)</text>
+  <path class="l" d="M600,134 V148 H880 V188"/>
+  <rect class="ext" x="716" y="190" width="358" height="156" rx="8"/>
+  <text class="t" x="730" y="213">Background pipeline (automation.py)</text>
+  <text class="s" x="730" y="234">1  validate type / size / file signature · store file</text>
+  <text class="s" x="730" y="252">2  parse PDF/DOCX/TXT · chunk · extract facts</text>
+  <text class="s" x="730" y="270">3  AI summary (extractive fallback)</text>
+  <text class="s" x="730" y="288">4  record result in database</text>
+  <text class="s" x="730" y="306">5  email (SMTP or .eml outbox)   6  webhook</text>
+  <text class="s" x="730" y="326">retries · every step logged · confidential = metadata only</text>
+
+  <!-- LLM -->
+  <rect class="ext" x="700" y="384" width="374" height="66" rx="8"/>
+  <text class="t" x="714" y="407">LLM client (llm.py)</text>
+  <text class="s" x="714" y="425">OpenAI · Anthropic · Ollama · offline mock</text>
+  <text class="s" x="714" y="441">timeout · retry/backoff · circuit breaker · outage toggle</text>
+  <path class="l" d="M636,416 H698"/>
+  <path class="ld" d="M880,346 V382"/>
+
+  <!-- Data -->
+  <rect class="data" x="36" y="500" width="606" height="112" rx="8"/>
+  <text class="t" x="50" y="524">SQLite (WAL) - db.py</text>
+  <text class="s" x="50" y="545">users · documents (classification, effective date, period, summary) · chunks</text>
+  <text class="s" x="50" y="563">financial_facts · policy_facts (extracted deterministically at ingest)</text>
+  <text class="s" x="50" y="581">automation_runs · audit_log (allowed / denied, incl. restricted-content probes) · queries</text>
+  <text class="s" x="50" y="599">uploads/ (original files) · outbox/ (notification emails)</text>
+  <path class="l" d="M336,456 V498"/>
+  <path class="l" d="M716,320 H672 V556 H644"/>
+
+  <rect class="ext" x="700" y="500" width="374" height="60" rx="8"/>
+  <text class="t" x="714" y="524">External services</text>
+  <text class="s" x="714" y="543">SMTP server · Slack / Teams / n8n webhook</text>
+  <path class="ld" d="M1074,300 H1094 V530 H1076"/>
+</svg>
